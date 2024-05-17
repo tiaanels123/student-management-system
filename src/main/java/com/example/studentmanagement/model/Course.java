@@ -1,23 +1,23 @@
 package com.example.studentmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Entity representing a course.
  */
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Course {
 
     /**
@@ -41,6 +41,7 @@ public class Course {
      * The list of students enrolled in the course.
      */
     @ManyToMany(mappedBy = "courses")
+    @JsonIgnore
     private List<Student> students = new ArrayList<>();
 
     // Getters and Setters
@@ -107,5 +108,15 @@ public class Course {
      */
     public void setStudents(final List<Student> students) {
         this.students = students;
+    }
+
+    /**
+     * Gets the list of student IDs enrolled in the course.
+     * @return the list of student IDs.
+     */
+    public List<Long> getStudentIds() {
+        return students.stream()
+                .map(Student::getId)
+                .collect(Collectors.toList());
     }
 }

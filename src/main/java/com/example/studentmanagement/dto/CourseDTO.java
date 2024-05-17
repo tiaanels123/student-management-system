@@ -1,25 +1,46 @@
 package com.example.studentmanagement.dto;
 
+import java.util.List;
+
 /**
- * Data transfer object for courses.
+ * Data Transfer Object for Course.
  */
 public class CourseDTO {
 
-    /**
-     * The name of the course.
-     */
+    /** The unique ID of the course. */
+    private Long id;
+
+    /** The name of the course. */
     private String name;
 
-    /**
-     * The description of the course.
-     */
+    /** The description of the course. */
     private String description;
 
-    // Getters and Setters
+    /** The list of student IDs enrolled in the course. */
+    private List<Long> studentIds;
+
+    /**
+     * Gets the ID of the course.
+     *
+     * @return the course ID
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the ID of the course.
+     *
+     * @param id the new course ID
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     /**
      * Gets the name of the course.
-     * @return the course name.
+     *
+     * @return the course name
      */
     public String getName() {
         return name;
@@ -27,15 +48,17 @@ public class CourseDTO {
 
     /**
      * Sets the name of the course.
-     * @param name the course name.
+     *
+     * @param name the new course name
      */
-    public void setName(final String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     /**
      * Gets the description of the course.
-     * @return the course description.
+     *
+     * @return the course description
      */
     public String getDescription() {
         return description;
@@ -43,9 +66,28 @@ public class CourseDTO {
 
     /**
      * Sets the description of the course.
-     * @param description the course description.
+     *
+     * @param description the new course description
      */
-    public void setDescription(final String description) {
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * Gets the list of student IDs enrolled in the course.
+     *
+     * @return the list of student IDs
+     */
+    public List<Long> getStudentIds() {
+        return studentIds;
+    }
+
+    /**
+     * Sets the list of student IDs enrolled in the course.
+     *
+     * @param studentIds the new list of student IDs
+     */
+    public void setStudentIds(List<Long> studentIds) {
+        this.studentIds = studentIds;
     }
 }

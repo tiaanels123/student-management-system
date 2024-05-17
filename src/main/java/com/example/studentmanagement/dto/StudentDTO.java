@@ -3,9 +3,14 @@ package com.example.studentmanagement.dto;
 import java.util.List;
 
 /**
- * Data transfer object for students.
+ * Data Transfer Object for Student.
  */
 public class StudentDTO {
+
+    /**
+     * The unique ID of the student.
+     */
+    private Long id;
 
     /**
      * The name of the student.
@@ -22,11 +27,28 @@ public class StudentDTO {
      */
     private List<CourseDTO> courses;
 
-    // Getters and Setters
+    /**
+     * Gets the ID of the student.
+     *
+     * @return the student ID.
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the ID of the student.
+     *
+     * @param id the student ID.
+     */
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
     /**
      * Gets the name of the student.
-     * @return the student's name.
+     *
+     * @return the student name.
      */
     public String getName() {
         return name;
@@ -34,7 +56,8 @@ public class StudentDTO {
 
     /**
      * Sets the name of the student.
-     * @param name the student's name.
+     *
+     * @param name the student name.
      */
     public void setName(final String name) {
         this.name = name;
@@ -42,7 +65,8 @@ public class StudentDTO {
 
     /**
      * Gets the email of the student.
-     * @return the student's email.
+     *
+     * @return the student email.
      */
     public String getEmail() {
         return email;
@@ -50,7 +74,8 @@ public class StudentDTO {
 
     /**
      * Sets the email of the student.
-     * @param email the student's email.
+     *
+     * @param email the student email.
      */
     public void setEmail(final String email) {
         this.email = email;
@@ -58,6 +83,7 @@ public class StudentDTO {
 
     /**
      * Gets the list of courses the student is enrolled in.
+     *
      * @return the list of courses.
      */
     public List<CourseDTO> getCourses() {
@@ -66,6 +92,7 @@ public class StudentDTO {
 
     /**
      * Sets the list of courses the student is enrolled in.
+     *
      * @param courses the list of courses.
      */
     public void setCourses(final List<CourseDTO> courses) {
