@@ -2,14 +2,16 @@ package com.example.studentmanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.context.annotation.Import;
 
+/**
+ * Test class for the main application.
+ */
 @SpringBootTest
-@TestPropertySource(properties = {"spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"})
+@Import(TestConfig.class)
 class StudentManagementSystemApplicationTests {
 
 	@Test
 	void contextLoads() {
 	}
-
 }
