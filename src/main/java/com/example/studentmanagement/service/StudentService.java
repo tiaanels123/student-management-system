@@ -21,19 +21,20 @@ import java.util.Set;
 public class StudentService {
 
     /**
-     * Repository for accessing student data.
+     * Repository for managing students.
      */
     @Autowired
     private StudentRepository studentRepository;
 
     /**
-     * Repository for accessing course data.
+     * Repository for managing courses.
      */
     @Autowired
     private CourseRepository courseRepository;
 
     /**
      * Adds a new student.
+     *
      * @param studentDTO the student data transfer object.
      * @return the added student.
      */
@@ -60,11 +61,57 @@ public class StudentService {
 
     /**
      * Retrieves all students.
+     *
      * @return a list of all students.
      */
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    // Other methods...
+    /**
+     * Updates an existing student.
+     *
+     * @param id the ID of the student to update.
+     * @param studentDTO the student data transfer object.
+     * @return the updated student.
+     */
+    public Student updateStudent(final Long id, final StudentDTO studentDTO) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        student.setName(studentDTO.getName());
+        student.setEmail(studentDTO.getEmail());
+
+        // Only update courses if they are included in the DTO
+        if (studentDTO.getCourses() != null) {
+            Set<Course> courses = new HashSet<>();
+            for (CourseDTO courseDTO : studentDTO.getCourses()) {
+                Course course = courseRepository.findByName(courseDTO.getName());
+                if (course == null) {
+                    course = new Course();
+                    course.setName(courseDTO.getName());
+                    course.setDescription(courseDTO.getDescription());
+                    courseRepository.save(course);
+                }
+                course.getStudents().add(student);
+                courses.add(course);
+            }
+            student.setCourses(new ArrayList<>(courses));
+        } else {
+            // Retain the existing courses if not provided in the update request
+            student.setCourses(student.getCourses());
+        }
+
+        return studentRepository.save(student);
+    }
+
+    /**
+     * Deletes a student.
+     *
+     * @param id the ID of the student to delete.
+     */
+    public void deleteStudent(final Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        studentRepository.delete(student);
+    }
 }

@@ -303,7 +303,7 @@ You can use tools like Postman or curl to test the endpoints.
 
 ### Example CURL Requests
 
-- The API will be available at http://localhost:8080
+- Add a Student:
 ```shell
   curl -X POST http://localhost:8080/students \
   -H "Content-Type: application/json" \
@@ -319,12 +319,12 @@ You can use tools like Postman or curl to test the endpoints.
 }'
   ```
 
-- The API will be available at http://localhost:8080
+- Get All Students:
   ```shell
   curl http://localhost:8080/students
   ```
   
-- The API will be available at http://localhost:8080
+- Get All Courses:
   ```shell
   curl http://localhost:8080/courses
   ```
