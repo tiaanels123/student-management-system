@@ -17,21 +17,15 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/**").permitAll()
-                                .anyRequest().authenticated()
-                )
+    public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/**").permitAll()
+                        .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .permitAll()
-                )
-                .httpBasic(httpBasic -> httpBasic
-                        .realmName("student-management-system")
-                );
+                        .permitAll())
+                .httpBasic(httpBasic -> httpBasic.realmName("student-management-system"));
 
         return http.build();
     }

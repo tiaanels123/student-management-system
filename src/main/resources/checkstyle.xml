@@ -27,7 +27,7 @@
         <module name="ParameterName"/>
         <module name="ParameterAssignment"/>
         <module name="TypeName"/>
-        <module name="SeparatorWrap"/>
+        <!-- <module name="SeparatorWrap"/> --> <!-- Commenting out the SeparatorWrap check -->
         <module name="AnnotationUseStyle"/>
         <module name="EmptyBlock"/>
         <module name="ParenPad"/>

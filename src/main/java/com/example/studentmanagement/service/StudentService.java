@@ -14,15 +14,30 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Service for managing students.
+ */
 @Service
 public class StudentService {
+
+    /**
+     * Repository for accessing student data.
+     */
     @Autowired
     private StudentRepository studentRepository;
 
+    /**
+     * Repository for accessing course data.
+     */
     @Autowired
     private CourseRepository courseRepository;
 
-    public Student addStudent(StudentDTO studentDTO) {
+    /**
+     * Adds a new student.
+     * @param studentDTO the student data transfer object.
+     * @return the added student.
+     */
+    public Student addStudent(final StudentDTO studentDTO) {
         Student student = new Student();
         student.setName(studentDTO.getName());
         student.setEmail(studentDTO.getEmail());
@@ -43,6 +58,10 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    /**
+     * Retrieves all students.
+     * @return a list of all students.
+     */
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
