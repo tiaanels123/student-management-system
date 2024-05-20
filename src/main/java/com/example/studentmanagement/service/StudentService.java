@@ -20,9 +20,15 @@ import java.util.Set;
 @Service
 public class StudentService {
 
+    /**
+     * Repository for managing student data.
+     */
     @Autowired
     private StudentRepository studentRepository;
 
+    /**
+     * Repository for managing course data.
+     */
     @Autowired
     private CourseRepository courseRepository;
 
