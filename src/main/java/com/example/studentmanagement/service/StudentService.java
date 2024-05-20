@@ -1,6 +1,6 @@
 package com.example.studentmanagement.service;
 
-import com.example.studentmanagement.dto.CourseDTO;
+import com.example.studentmanagement.dto.CourseCountDTO;
 import com.example.studentmanagement.dto.StudentDTO;
 import com.example.studentmanagement.model.Course;
 import com.example.studentmanagement.model.Student;
@@ -20,15 +20,9 @@ import java.util.Set;
 @Service
 public class StudentService {
 
-    /**
-     * Repository for managing students.
-     */
     @Autowired
     private StudentRepository studentRepository;
 
-    /**
-     * Repository for managing courses.
-     */
     @Autowired
     private CourseRepository courseRepository;
 
@@ -44,7 +38,7 @@ public class StudentService {
         student.setEmail(studentDTO.getEmail());
 
         Set<Course> courses = new HashSet<>();
-        for (CourseDTO courseDTO : studentDTO.getCourses()) {
+        for (CourseCountDTO courseDTO : studentDTO.getCourses()) {
             Course course = courseRepository.findByName(courseDTO.getName());
             if (course == null) {
                 course = new Course();
@@ -84,7 +78,7 @@ public class StudentService {
         // Only update courses if they are included in the DTO
         if (studentDTO.getCourses() != null) {
             Set<Course> courses = new HashSet<>();
-            for (CourseDTO courseDTO : studentDTO.getCourses()) {
+            for (CourseCountDTO courseDTO : studentDTO.getCourses()) {
                 Course course = courseRepository.findByName(courseDTO.getName());
                 if (course == null) {
                     course = new Course();

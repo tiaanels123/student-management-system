@@ -1,16 +1,14 @@
 package com.example.studentmanagement.dto;
 
-import java.util.List;
-
 /**
- * Data Transfer Object for Course.
+ * Data Transfer Object for Course with student count.
  */
-public class CourseDTO {
+public class CourseCountDTO {
 
     private Long id;
     private String name;
     private String description;
-    private List<StudentCountDTO> students;
+    private int studentCount;
 
     // Getters and Setters
 
@@ -38,11 +36,11 @@ public class CourseDTO {
         this.description = description;
     }
 
-    public List<StudentCountDTO> getStudents() {
-        return students;
+    public int getStudentCount() {
+        return studentCount;
     }
 
-    public void setStudents(List<StudentCountDTO> students) {
-        this.students = students;
+    public void setStudentCount(int studentCount) {
+        this.studentCount = studentCount;
     }
 }
