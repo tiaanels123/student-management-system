@@ -1,15 +1,15 @@
 package com.example.studentmanagement.controller;
 
-import com.example.studentmanagement.dto.CourseDTO;
+import com.example.studentmanagement.dto.CourseCountDTO;
 import com.example.studentmanagement.dto.StudentDTO;
 import com.example.studentmanagement.model.Student;
 import com.example.studentmanagement.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +33,8 @@ public class StudentController {
     /**
      * Adds a new student.
      *
-     * @param studentDTO the student data transfer object.
-     * @return the added student.
+     * @param studentDTO the student data transfer object
+     * @return the added student
      */
     @PostMapping
     public StudentDTO addStudent(@RequestBody StudentDTO studentDTO) {
@@ -45,7 +45,7 @@ public class StudentController {
     /**
      * Retrieves all students.
      *
-     * @return a list of all students.
+     * @return a list of all students
      */
     @GetMapping
     public List<StudentDTO> getAllStudents() {
@@ -56,9 +56,9 @@ public class StudentController {
     /**
      * Updates an existing student.
      *
-     * @param id the ID of the student to update.
-     * @param studentDTO the student data transfer object.
-     * @return the updated student.
+     * @param id the ID of the student to update
+     * @param studentDTO the student data transfer object
+     * @return the updated student
      */
     @PutMapping("/{id}")
     public StudentDTO updateStudent(@PathVariable Long id, @RequestBody StudentDTO studentDTO) {
@@ -69,7 +69,7 @@ public class StudentController {
     /**
      * Deletes a student.
      *
-     * @param id the ID of the student to delete.
+     * @param id the ID of the student to delete
      */
     @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable Long id) {
@@ -79,8 +79,8 @@ public class StudentController {
     /**
      * Converts a Student entity to a StudentDTO.
      *
-     * @param student the student entity.
-     * @return the student data transfer object.
+     * @param student the student entity
+     * @return the student data transfer object
      */
     private StudentDTO convertToDTO(Student student) {
         StudentDTO studentDTO = new StudentDTO();
@@ -89,13 +89,11 @@ public class StudentController {
         studentDTO.setEmail(student.getEmail());
         studentDTO.setCourses(student.getCourses().stream()
                 .map(course -> {
-                    CourseDTO courseDTO = new CourseDTO();
+                    CourseCountDTO courseDTO = new CourseCountDTO();
                     courseDTO.setId(course.getId());
                     courseDTO.setName(course.getName());
                     courseDTO.setDescription(course.getDescription());
-                    courseDTO.setStudentIds(course.getStudents().stream()
-                            .map(Student::getId)
-                            .collect(Collectors.toList()));
+                    courseDTO.setStudentCount(course.getStudents().size());
                     return courseDTO;
                 }).collect(Collectors.toList()));
         return studentDTO;

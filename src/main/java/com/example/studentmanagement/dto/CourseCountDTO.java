@@ -1,11 +1,9 @@
 package com.example.studentmanagement.dto;
 
-import java.util.List;
-
 /**
- * Data Transfer Object for Course.
+ * Data Transfer Object for Course with student count.
  */
-public class CourseDTO {
+public class CourseCountDTO {
 
     /**
      * The ID of the course.
@@ -23,9 +21,9 @@ public class CourseDTO {
     private String description;
 
     /**
-     * The list of students enrolled in the course.
+     * The number of students enrolled in the course.
      */
-    private List<StudentCountDTO> students;
+    private int studentCount;
 
     /**
      * Gets the ID of the course.
@@ -82,20 +80,20 @@ public class CourseDTO {
     }
 
     /**
-     * Gets the list of students enrolled in the course.
+     * Gets the number of students enrolled in the course.
      *
-     * @return the list of students enrolled in the course
+     * @return the number of students enrolled in the course
      */
-    public List<StudentCountDTO> getStudents() {
-        return students;
+    public int getStudentCount() {
+        return studentCount;
     }
 
     /**
-     * Sets the list of students enrolled in the course.
+     * Sets the number of students enrolled in the course.
      *
-     * @param students the list of students enrolled in the course
+     * @param studentCount the number of students enrolled in the course
      */
-    public void setStudents(List<StudentCountDTO> students) {
-        this.students = students;
+    public void setStudentCount(int studentCount) {
+        this.studentCount = studentCount;
     }
 }
