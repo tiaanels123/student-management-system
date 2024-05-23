@@ -25,7 +25,7 @@ public class CourseDTO {
     /**
      * The list of students enrolled in the course.
      */
-    private List<StudentCountDTO> students;
+    private List<UserCountDTO> students;
 
     /**
      * Gets the ID of the course.
@@ -86,7 +86,7 @@ public class CourseDTO {
      *
      * @return the list of students enrolled in the course
      */
-    public List<StudentCountDTO> getStudents() {
+    public List<UserCountDTO> getStudents() {
         return students;
     }
 
@@ -95,7 +95,7 @@ public class CourseDTO {
      *
      * @param students the list of students enrolled in the course
      */
-    public void setStudents(List<StudentCountDTO> students) {
+    public void setStudents(List<UserCountDTO> students) {
         this.students = students;
     }
 }

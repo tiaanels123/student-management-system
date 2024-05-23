@@ -2,14 +2,14 @@
 
 ## Overview
 
-The Student Management System is a RESTful API built with Spring Boot. It manages students and their enrollment in various courses. The system allows users to perform CRUD operations on students and courses, and it maintains the many-to-many relationship between students and courses.
+The Student Management System is a RESTful API built with Spring Boot. It manages users and their enrollment in various courses. The system allows users to perform CRUD operations on users and courses, and it maintains the many-to-many relationship between users and courses.
 
 ## Features
 
-- Add, update, delete, and retrieve students.
+- Add, update, delete, and retrieve users.
 - Add, update, delete, and retrieve courses.
-- Enroll students in courses and list the courses a student is enrolled in.
-- List students enrolled in a particular course.
+- Enroll users in courses and list the courses a user is enrolled in.
+- List users enrolled in a particular course.
 
 ## Technical Overview
 
@@ -33,16 +33,16 @@ The application uses two main entities: `Student` and `Course`. They have a many
 #### Student
 
 - `id` (Long): Primary key
-- `name` (String): Name of the student
-- `email` (String): Email of the student
-- `courses` (List<Course>): List of courses the student is enrolled in
+- `name` (String): Name of the user
+- `email` (String): Email of the user
+- `courses` (List<Course>): List of courses the user is enrolled in
 
 #### Course
 
 - `id` (Long): Primary key
 - `name` (String): Name of the course
 - `description` (String): Description of the course
-- `students` (List<Student>): List of students enrolled in the course
+- `users` (List<Student>): List of users enrolled in the course
 
 ### JSON Serialization
 
@@ -60,7 +60,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
 
 #### Add a Student
 
-- **URL:** `/students`
+- **URL:** `/users`
 - **Method:** `POST`
 - **Request Body:**
   ```json
@@ -86,7 +86,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
             "id": 1,
             "name": "Science 101",
             "description": "Introduction to Science",
-            "students": [1]
+            "users": [1]
         }
     ]
   }
@@ -94,7 +94,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
 
 #### Get All Students
 
-- **URL:** `/students`
+- **URL:** `/users`
 - **Method:** `GET`
 - **Response Body:**
   ```json
@@ -108,7 +108,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
                 "id": 1,
                 "name": "Science 101",
                 "description": "Introduction to Science",
-                "students": [1]
+                "users": [1]
             }
         ]
     }
@@ -117,7 +117,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
 
 #### Get a Student by ID
 
-- **URL:** `/students/{id}`
+- **URL:** `/users/{id}`
 - **Method:** `GET`
 - **Response Body:**
   ```json
@@ -130,7 +130,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
             "id": 1,
             "name": "Science 101",
             "description": "Introduction to Science",
-            "students": [1]
+            "users": [1]
         }
     ]
   }
@@ -138,7 +138,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
 
 #### Update a Student
 
-- **URL:** `/students/{id}`
+- **URL:** `/users/{id}`
 - **Method:** `PUT`
 - **Request Body:**
   ```json
@@ -158,7 +158,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
             "id": 1,
             "name": "Science 101",
             "description": "Introduction to Science",
-            "students": [1]
+            "users": [1]
         }
     ]
   }
@@ -166,7 +166,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
 
 #### Delete a Student
 
-- **URL:** `/students/{id}`
+- **URL:** `/users/{id}`
 - **Method:** `DELETE`
 - **Response Body:**
   ```text
@@ -207,7 +207,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
         "id": 1,
         "name": "Science 101",
         "description": "Introduction to Science",
-        "students": [
+        "users": [
             {
                 "id": 1,
                 "name": "John Doe",
@@ -229,7 +229,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
     "id": 1,
     "name": "Science 101",
     "description": "Introduction to Science",
-    "students": [
+    "users": [
         {
             "id": 1,
             "name": "John Doe",
@@ -257,7 +257,7 @@ A linter is also added to the project to ensure code quality and consistency. Th
     "id": 1,
     "name": "Advanced Science 101",
     "description": "Advanced Introduction to Science",
-    "students": [
+    "users": [
         {
             "id": 1,
             "name": "John Doe",
@@ -281,8 +281,8 @@ A linter is also added to the project to ensure code quality and consistency. Th
 
 ### Clone the Repository:
   ```shell
-  git clone https://github.com/your-username/student-management-system.git
-  cd student-management-system
+  git clone https://github.com/your-username/user-management-system.git
+  cd user-management-system
   ```
 
 ### Build the Project:
@@ -305,7 +305,7 @@ You can use tools like Postman or curl to test the endpoints.
 
 - Add a Student:
 ```shell
-  curl -X POST http://localhost:8080/students \
+  curl -X POST http://localhost:8080/users \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",
@@ -321,7 +321,7 @@ You can use tools like Postman or curl to test the endpoints.
 
 - Get All Students:
   ```shell
-  curl http://localhost:8080/students
+  curl http://localhost:8080/users
   ```
   
 - Get All Courses:
@@ -331,7 +331,7 @@ You can use tools like Postman or curl to test the endpoints.
 
 ## Conclusion
 
-This Student Management System provides a comprehensive API for managing students and courses, demonstrating the use of Spring Boot, Spring Data JPA, and relational database management in a many-to-many relationship context.
+This Student Management System provides a comprehensive API for managing users and courses, demonstrating the use of Spring Boot, Spring Data JPA, and relational database management in a many-to-many relationship context.
 
 
 

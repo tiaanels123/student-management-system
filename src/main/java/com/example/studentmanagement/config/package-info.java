@@ -1,4 +1,4 @@
 /**
- * Configuration package for the Student Management System application.
+ * Configuration package for the User Management System application.
  */
 package com.example.studentmanagement.config;

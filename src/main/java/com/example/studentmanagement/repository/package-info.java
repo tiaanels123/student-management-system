@@ -1,4 +1,4 @@
 /**
- * Repository package for the Student Management System application.
+ * Repository package for the User Management System application.
  */
 package com.example.studentmanagement.repository;

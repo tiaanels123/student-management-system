@@ -1,4 +1,4 @@
 /**
- * Model package for the Student Management System application.
+ * Model package for the User Management System application.
  */
 package com.example.studentmanagement.model;

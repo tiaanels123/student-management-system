@@ -1,4 +1,4 @@
 /**
- * Main package for the Student Management System application.
+ * Main package for the User Management System application.
  */
 package com.example.studentmanagement;
