@@ -27,7 +27,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/users/register", "/users/login").permitAll()
                 .requestMatchers("/users/me").authenticated()
-                .requestMatchers("/users/{id}", "/users/{id}/courses", "/users").hasRole("ADMIN")
+                .requestMatchers("/users/{id}", "/users").hasRole("ADMIN")
+                .requestMatchers("/courses").permitAll()
+                .requestMatchers("/courses/**").hasRole("ADMIN")
+                .requestMatchers("/users/{userId}/courses/{courseId}").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

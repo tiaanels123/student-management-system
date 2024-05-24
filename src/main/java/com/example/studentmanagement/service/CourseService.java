@@ -41,9 +41,11 @@ public class CourseService {
         Optional<Course> optionalCourse = courseRepository.findById(id);
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
-            for (User user : course.getUsers()) {
-                user.getCourses().remove(course);
-                userRepository.save(user);
+            if (course.getUsers() != null) {
+                for (User user : course.getUsers()) {
+                    user.getCourses().remove(course);
+                    userRepository.save(user);
+                }
             }
             courseRepository.delete(course);
         } else {

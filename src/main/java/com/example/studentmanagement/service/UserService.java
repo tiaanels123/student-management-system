@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -169,5 +170,29 @@ public class UserService {
             return courseDTO;
         }).collect(Collectors.toList()) : new ArrayList<>());
         return userDTO;
+    }
+
+    @Transactional
+    public void enrollUserInCourse(Long userId, Long courseId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        if (user.getCourses().contains(course)) {
+            throw new RuntimeException("User is already enrolled in this course");
+        }
+
+        user.getCourses().add(course);
+        course.getUsers().add(user);
+
+        userRepository.save(user);
+        courseRepository.save(course);
+    }
+
+    public List<Course> getUserCourses(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getCourses();
     }
 }
