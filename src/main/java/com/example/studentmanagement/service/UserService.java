@@ -148,20 +148,26 @@ public class UserService {
         return convertToDTO(user);
     }
 
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return convertToDTO(user);
+    }
+
     private UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
         userDTO.setEmail(user.getEmail());
-        userDTO.setRoles(user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
-        userDTO.setCourses(user.getCourses().stream().map(course -> {
+        userDTO.setRoles(user.getRoles() != null ? user.getRoles().stream().map(Role::getName).collect(Collectors.toList()) : new ArrayList<>());
+        userDTO.setCourses(user.getCourses() != null ? user.getCourses().stream().map(course -> {
             CourseCountDTO courseDTO = new CourseCountDTO();
             courseDTO.setId(course.getId());
             courseDTO.setName(course.getName());
             courseDTO.setDescription(course.getDescription());
-            courseDTO.setStudentCount(course.getUsers().size());
+            courseDTO.setStudentCount(course.getUsers() != null ? course.getUsers().size() : 0);
             return courseDTO;
-        }).collect(Collectors.toList()));
+        }).collect(Collectors.toList()) : new ArrayList<>());
         return userDTO;
     }
 }
