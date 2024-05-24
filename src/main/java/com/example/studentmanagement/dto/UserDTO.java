@@ -2,6 +2,7 @@ package com.example.studentmanagement.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL) // This will exclude fields that are null
@@ -13,7 +14,7 @@ public class UserDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL) // Ensure password is included only when not null
     private String password;
     private List<String> roles;
-    private List<CourseCountDTO> courses;
+    private List<CourseCountDTO> courses = new ArrayList<>();
 
     // Getters and setters
 

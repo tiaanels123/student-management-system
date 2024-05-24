@@ -9,6 +9,8 @@ import com.example.studentmanagement.repository.CourseRepository;
 import com.example.studentmanagement.repository.RoleRepository;
 import com.example.studentmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -65,17 +67,20 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers() {
-        System.out.println("Fetching all users from the repository");
-        List<User> users = userRepository.findAll();
-        System.out.println("Users fetched: " + users);
-        List<UserDTO> userDTOs = users.stream()
+        return userRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
-        System.out.println("User DTOs created: " + userDTOs);
-        return userDTOs;
     }
 
     public UserDTO updateUser(Long id, UserDTO userDTO) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userRepository.findByEmail(auth.getName())
+                .orElseThrow(() -> new RuntimeException("Logged in user not found"));
+
+        if (!currentUser.getRoles().stream().anyMatch(role -> role.getName().equals("ADMIN")) && !currentUser.getId().equals(id)) {
+            throw new RuntimeException("You are not authorized to update this user");
+        }
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.setName(userDTO.getName());
@@ -84,19 +89,21 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         }
 
-        Set<Course> courses = new HashSet<>();
-        for (CourseCountDTO courseDTO : userDTO.getCourses()) {
-            Course course = courseRepository.findByName(courseDTO.getName());
-            if (course == null) {
-                course = new Course();
-                course.setName(courseDTO.getName());
-                course.setDescription(courseDTO.getDescription());
-                courseRepository.save(course);
+        if (userDTO.getCourses() != null) {
+            Set<Course> courses = new HashSet<>();
+            for (CourseCountDTO courseDTO : userDTO.getCourses()) {
+                Course course = courseRepository.findByName(courseDTO.getName());
+                if (course == null) {
+                    course = new Course();
+                    course.setName(courseDTO.getName());
+                    course.setDescription(courseDTO.getDescription());
+                    courseRepository.save(course);
+                }
+                course.getUsers().add(user);
+                courses.add(course);
             }
-            course.getUsers().add(user);
-            courses.add(course);
+            user.setCourses(new ArrayList<>(courses));
         }
-        user.setCourses(new ArrayList<>(courses));
 
         return convertToDTO(userRepository.save(user));
     }
@@ -135,21 +142,26 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return convertToDTO(user);
+    }
+
     private UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
         userDTO.setEmail(user.getEmail());
-        // Exclude the password field from the DTO
-        userDTO.setRoles(user.getRoles() != null ? user.getRoles().stream().map(Role::getName).collect(Collectors.toList()) : new ArrayList<>());
-        userDTO.setCourses(user.getCourses() != null ? user.getCourses().stream().map(course -> {
+        userDTO.setRoles(user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
+        userDTO.setCourses(user.getCourses().stream().map(course -> {
             CourseCountDTO courseDTO = new CourseCountDTO();
             courseDTO.setId(course.getId());
             courseDTO.setName(course.getName());
             courseDTO.setDescription(course.getDescription());
-            courseDTO.setStudentCount(course.getUsers() != null ? course.getUsers().size() : 0);
+            courseDTO.setStudentCount(course.getUsers().size());
             return courseDTO;
-        }).collect(Collectors.toList()) : new ArrayList<>());
+        }).collect(Collectors.toList()));
         return userDTO;
     }
 }
